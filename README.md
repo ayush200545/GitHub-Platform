@@ -62,16 +62,24 @@ GitForage is a premium, interactive 3D platform designed to serve as a modern Co
 ## 📸 Platform Showcase
 
 ### 1. The 3D Dark Neon Auth Experience
-![Auth Page](screenshots/auth.webp)
+![Auth Page](screenshots/auth.png)
 *A truly unique login experience featuring floating glassmorphic panels, CSS 3D transforms (`rotateX/Y`), and an animated glowing neon mesh background.*
 
 ### 2. The Command Center Dashboard
-![Dashboard](screenshots/dashboard.webp)
+![Dashboard](screenshots/dashboard.png)
 *Manage your deployed repositories, view Top Performers on 3D pedestals, and watch simulated real-time developer activity on the Live Terminal overlay.*
 
 ### 3. The Global Explore Network
-![Explore Page](screenshots/explore.webp)
-*Access the global network. Use the glassmorphic search bar or dynamic filters to instantly sort by "Latest Uploaded" or "Popular". Click on any repo to enter its 3D Viewer or Fork it!*
+![Explore Page](screenshots/explore.png)
+*Access the global network. Use the glassmorphic search bar or dynamic filters to instantly sort by "Latest Uploaded" or "Popular".*
+
+### 4. Repository 3D Viewer
+![Repository Viewer](screenshots/repo.png)
+*Dive into any public repository. View file structures, dynamic mock data, custom READMEs, and instantly Fork projects to your own dashboard!*
+
+### 5. Developer Profile
+![User Profile](screenshots/profile.png)
+*A persistent, sticky left-hand sidebar containing user stats, with custom tabbed navigation to view the GitHub-style Contribution Heatmap and owned repositories.*
 
 ---
 *Built as a showcase for advanced modern web design and interactive component engineering.*
