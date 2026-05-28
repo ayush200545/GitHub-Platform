@@ -178,6 +178,27 @@ async function deleteUserProfile(req, res) {
   }
 }
 
+async function getTopPerformers(req, res) {
+  try {
+    await connectClient();
+    const db = client.db("githubclone");
+    const usersCollection = db.collection("users");
+
+    // Fetch users and sort them by the number of repositories (descending)
+    // We can also sort by other metrics if added later
+    const topUsers = await usersCollection
+      .find({})
+      .sort({ "repositories.length": -1, _id: 1 })
+      .limit(10)
+      .toArray();
+
+    res.json(topUsers);
+  } catch (err) {
+    console.error("Error during fetching top performers : ", err.message);
+    res.status(500).send("Server error!");
+  }
+}
+
 module.exports = {
   getAllUsers,
   signup,
@@ -185,4 +206,5 @@ module.exports = {
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  getTopPerformers,
 };

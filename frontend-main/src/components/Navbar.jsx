@@ -1,26 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../authContext";
 import "./navbar.css";
 
 const Navbar = () => {
+  const { currentUser, setCurrentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    setCurrentUser(null);
+    navigate("/auth");
+  };
+
   return (
-    <nav>
-      <Link to="/">
-        <div>
-          <img
-            src="https://www.github.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="GitHub Logo"
-          />
-          <h3>GitHub</h3>
+    <nav className="glass-navbar">
+      <Link to="/" className="nav-brand">
+        <div className="brand-icon">
+          <div className="cube"></div>
         </div>
+        <h3>GitForage</h3>
       </Link>
-      <div>
-        <Link to="/create">
-          <p>Create a Repository</p>
-        </Link>
-        <Link to="/profile">
-          <p>Profile</p>
-        </Link>
+      <div className="nav-links">
+        <Link to="/" className="nav-link">Dashboard</Link>
+        <Link to="/public" className="nav-link">Explore</Link>
+        {currentUser ? (
+          <>
+            <Link to="/profile" className="nav-link">Profile</Link>
+            <button onClick={handleLogout} className="neon-btn nav-btn">Logout</button>
+          </>
+        ) : (
+          <Link to="/auth" className="neon-btn nav-btn">Sign In</Link>
+        )}
       </div>
     </nav>
   );

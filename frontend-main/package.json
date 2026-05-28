@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.24.7",
-    "@primer/css": "^21.3.6",
-    "@primer/react": "^36.27.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@uiw/react-heat-map": "^2.2.2",
     "axios": "^1.7.3",

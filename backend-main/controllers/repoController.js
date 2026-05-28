@@ -158,6 +158,19 @@ async function deleteRepositoryById(req, res) {
   }
 }
 
+async function getPublicRepositories(req, res) {
+  try {
+    const repositories = await Repository.find({ visibility: true })
+      .populate("owner")
+      .populate("issues");
+
+    res.json(repositories);
+  } catch (err) {
+    console.error("Error during fetching public repositories : ", err.message);
+    res.status(500).send("Server error");
+  }
+}
+
 module.exports = {
   createRepository,
   getAllRepositories,
@@ -167,4 +180,5 @@ module.exports = {
   updateRepositoryById,
   toggleVisibilityById,
   deleteRepositoryById,
+  getPublicRepositories,
 };

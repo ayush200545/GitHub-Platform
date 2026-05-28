@@ -3,20 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./profile.css";
 import Navbar from "../Navbar";
-import { UnderlineNav } from "@primer/react";
-import { BookIcon, RepoIcon } from "@primer/octicons-react";
 import HeatMapProfile from "./HeatMap";
-import { useAuth } from "../../authContext";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState({ username: "username" });
-  const { setCurrentUser } = useAuth();
+  const [userDetails, setUserDetails] = useState({ username: "Loading..." });
+  const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       const userId = localStorage.getItem("userId");
-
       if (userId) {
         try {
           const response = await axios.get(
@@ -34,71 +30,66 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <UnderlineNav aria-label="Repository">
-        <UnderlineNav.Item
-          aria-current="page"
-          icon={BookIcon}
-          sx={{
-            backgroundColor: "transparent",
-            color: "white",
-            "&:hover": {
-              textDecoration: "underline",
-              color: "white",
-            },
-          }}
-        >
-          Overview
-        </UnderlineNav.Item>
+      <div className="page-container profile-layout">
+        
+        {/* User Sidebar */}
+        <aside className="profile-sidebar">
+          <div className="glass-panel profile-card">
+            <div className="profile-avatar">
+              <div className="avatar-placeholder">
+                {userDetails.username ? userDetails.username.charAt(0).toUpperCase() : "?"}
+              </div>
+            </div>
 
-        <UnderlineNav.Item
-          onClick={() => navigate("/repo")}
-          icon={RepoIcon}
-          sx={{
-            backgroundColor: "transparent",
-            color: "whitesmoke",
-            "&:hover": {
-              textDecoration: "underline",
-              color: "white",
-            },
-          }}
-        >
-          Starred Repositories
-        </UnderlineNav.Item>
-      </UnderlineNav>
+            <div className="profile-info">
+              <h2 className="profile-name">{userDetails.username}</h2>
+              <p className="profile-bio">Exploring the digital frontier.</p>
+            </div>
 
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("userId");
-          setCurrentUser(null);
+            <button className="neon-btn full-width profile-follow-btn">Follow</button>
 
-          window.location.href = "/auth";
-        }}
-        style={{ position: "fixed", bottom: "50px", right: "50px" }}
-        id="logout"
-      >
-        Logout
-      </button>
+            <div className="profile-stats">
+              <div className="stat-box">
+                <span className="stat-value">124</span>
+                <span className="stat-label">Followers</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-value">42</span>
+                <span className="stat-label">Following</span>
+              </div>
+            </div>
+          </div>
+        </aside>
 
-      <div className="profile-page-wrapper">
-        <div className="user-profile-section">
-          <div className="profile-image"></div>
-
-          <div className="name">
-            <h3>{userDetails.username}</h3>
+        {/* Main Content Area */}
+        <main className="profile-main">
+          
+          {/* Custom Tabs */}
+          <div className="profile-tabs">
+            <button 
+              className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
+              onClick={() => setActiveTab('overview')}
+            >
+              Overview
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'repos' ? 'active' : ''}`}
+              onClick={() => navigate("/")}
+            >
+              Repositories
+            </button>
           </div>
 
-          <button className="follow-btn">Follow</button>
-
-          <div className="follower">
-            <p>10 Follower</p>
-            <p>3 Following</p>
+          <div className="tab-content">
+            <div className="glass-panel heatmap-panel">
+              <h3 className="section-title">Contribution Activity</h3>
+              <div className="heatmap-wrapper">
+                <HeatMapProfile />
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="heat-map-section">
-          <HeatMapProfile />
-        </div>
+          
+        </main>
       </div>
     </>
   );
